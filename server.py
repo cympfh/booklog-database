@@ -94,4 +94,4 @@ def get(username: str, limit: int = 20, q: Optional[str] = None):
     return books
 
 
-app.mount("/", MountFiles(directory="web/public", html=True), name="static")
+app.mount("/book", MountFiles(directory="web/public", html=True), name="static")
