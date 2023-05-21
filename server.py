@@ -57,6 +57,9 @@ class Book:
 
 
 class Booklog:
+
+    USERAGENT = "App/cympfh"
+
     def __init__(self):
         self.cache = expiringdict.ExpiringDict(max_len=100, max_age_seconds=30)
 
@@ -77,7 +80,9 @@ class Booklog:
             "keyword": keyword,
             "json": "true",
         }
-        val = requests.get(url, params).json()
+        headers = {"user-agent": Booklog.USERAGENT}
+        res = requests.get(url, params, headers=headers)
+        val = res.json()
 
         # caching & return
         self.cache[cache_key] = val
