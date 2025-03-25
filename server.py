@@ -44,7 +44,7 @@ class Book:
             id=id,
             title=data.get("title"),
             authors=data.get("item", {}).get("authors", []),
-            image=data.get("image_2x"),
+            image=data.get("image"),
             publisher=data.get("item", {}).get("publisher"),
             release_date=data.get("item", {}).get("release_date"),
             amazon_link=data.get("item", {}).get("url"),
