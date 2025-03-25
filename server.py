@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from typing import Optional
+from typing import Any
 
 import expiringdict
 import requests
@@ -34,7 +34,7 @@ class Book:
     review: str
 
     @staticmethod
-    def from_json(data: dict, username: str) -> Book:
+    def from_json(data: dict[str, Any], username: str) -> Book:
         """From booklo API JSON"""
         service_id = data.get("service_id")
         id = data.get("id")
@@ -57,7 +57,6 @@ class Book:
 
 
 class Booklog:
-
     USERAGENT = "App/cympfh"
 
     def __init__(self):
@@ -93,7 +92,7 @@ booklog = Booklog()
 
 
 @app.get("/book/api/{username}")
-def get(username: str, limit: int = 20, q: Optional[str] = None):
+def get(username: str, limit: int = 20, q: str | None = None):
     res = booklog.search(username, q or "")
     books = [Book.from_json(data, username) for data in res.get("books", [])[:limit]]
     return books
